@@ -1,0 +1,21 @@
+# Ignore Eclipse project files
+.metadata/
+.project
+.classpath
+.settings/
+
+# Ignore SonarLint
+.sonarlint/
+
+# Ignore IntelliJ IDEA
+.idea/
+*.iml
+
+# Ignore build output
+target/
+bin/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
