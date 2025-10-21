@@ -1,0 +1,52 @@
+services:
+  eureka-service:
+    build: ./Services/EurekaService
+    ports:
+      - "8761:8761"
+    networks:
+      - learning-app-network
+  user-service:
+    build: ./Services/user-service
+    ports:
+      - "9001:9001"
+    depends_on:
+      - eureka-service
+    networks:
+      - learning-app-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=changeme
+      - xpack.security.enabled=false
+    networks:
+      - learning-app-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - learning-app-network
+
+  zipkin:
+    image: openzipkin/zipkin:2.27
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - learning-app-network
+
+
+
+networks:
+  learning-app-network:
+    driver: bridge
