@@ -1,18 +1,27 @@
 services:
-  eureka-service:
-    build: ./Services/EurekaService
-    ports:
-      - "8761:8761"
-    networks:
-      - learning-app-network
-  user-service:
-    build: ./Services/user-service
-    ports:
-      - "9001:9001"
-    depends_on:
-      - eureka-service
-    networks:
-      - learning-app-network
+#  eureka-service:
+#    build: ../Services/EurekaService
+#    container_name: eureka-service
+#    ports:
+#      - "8761:8761"
+#    networks:
+#      - learning-app-network
+#
+#  user-service:
+#    build: ../Services/user-service
+#    container_name: user-service
+#    ports:
+#      - "9001:9001"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/learning_app?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: root
+#      SPRING_PROFILES_ACTIVE: docker
+#      EUREKA_CLIENT_SERVICEURL_DEFAULT_ZONE: http://eureka-service:8761/eureka/
+#    depends_on:
+#      - eureka-service
+#    networks:
+#      - learning-app-network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
@@ -44,9 +53,18 @@ services:
       - "9411:9411"
     networks:
       - learning-app-network
-
-
+  redis:
+    image: redis:7.2
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - learning-app-network
 
 networks:
   learning-app-network:
     driver: bridge
+
+volumes:
+  redis-data:
