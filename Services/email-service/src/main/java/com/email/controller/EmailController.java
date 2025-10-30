@@ -24,4 +24,10 @@ public class EmailController {
         log.info("In sendOTP() to send the otp to the " + request.getTo());
         return ResponseEntity.ok(emailService.sendOTP(request));
     }
+
+    @GetMapping("verifyOTP/{otp}")
+    public ResponseEntity<String> verifyOtp(@PathVariable Long otp){
+
+        return ResponseEntity.ok(emailService.verifyOTP(otp));
+    }
 }

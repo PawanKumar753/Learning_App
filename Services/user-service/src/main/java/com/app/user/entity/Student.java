@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,11 +33,21 @@ public class Student {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdAt;
-    private Set<String> courseList = new HashSet<>();
 
     @Lob
     @Column(name = "data", columnDefinition = "BLOB")
     private byte[] resume;
-    
+
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Education> educationList;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "student_interest",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "interest_id")
+    )
+    private Set<Intrests> interests = new HashSet<>();
 
 }

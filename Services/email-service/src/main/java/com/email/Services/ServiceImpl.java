@@ -24,12 +24,15 @@ public class ServiceImpl implements ServiceInterface{
 
     @Override
     public String sendOTP(Email request) {
+
         log.info("in sendOTP()");
         Long otp = (long)(1000 + random.nextInt(9999));
+        String message = "Enter below otp to verify your email.It is valid until 5 minutes " + otp;
         log.info("Storing the otp inside the redis");
         redisTemplate.opsForValue().set("otp", otp.toString(), 5, TimeUnit.MINUTES);
         log.info(otp + "otp created");
-        boolean status = sendMail(request);
+        Email mail = new Email(request.getSubject(), request.getTo(), message);
+        boolean status = sendMail(mail);
         if(status){
             log.info("OTP sent successfully");
             return "OTP Sent Successfully";
@@ -37,6 +40,23 @@ public class ServiceImpl implements ServiceInterface{
             log.info("OTP is unable to send to the mail");
             return "OTP sending failed";
         }
+
+    }
+
+    @Override
+    public String verifyOTP(Long otp) {
+       String otpValue = redisTemplate.opsForValue().get("otp");
+       if(otpValue == null){
+           return "Time expired";
+       }
+
+       Long sentOtp = Long.parseLong(otpValue);
+
+       if(sentOtp.equals(otp)){
+           return "email verified successfully";
+       }else {
+           return "Invalid OTP";
+       }
 
     }
 

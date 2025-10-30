@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class EmailRequest {
-
-    private String subject;
-    private String to;
+public class LoginRequest {
+    private String email;
+    private String password;
 }
