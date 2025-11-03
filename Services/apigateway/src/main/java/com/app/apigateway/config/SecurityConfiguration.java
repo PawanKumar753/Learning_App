@@ -15,6 +15,10 @@ public class SecurityConfiguration {
                         .uri("lb://USER-SERVICE"))
                 .route("email-service", r -> r.path("/api/email/**")
                         .uri("lb://EMAIL-SERVICE"))
+                .route("internship-service",r -> r.path("/intership/**")
+                        .uri("lb://INTERNSHIP-SERVICE"))
+                .route("mentor-service", r -> r.path("/api/mentor/**")
+                        .uri("lb://MENTOR-SERVICE"))
                 .build();
 
     }
