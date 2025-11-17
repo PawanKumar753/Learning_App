@@ -1,25 +1,17 @@
-package com.app.internship.entity;
+package com.app.internship.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "INTERNSHIP_TABLE")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Where(clause = "is_deleted=false")
-public class Internship {
+public class UpdateInternshipDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String imageURL;
     private String internshipTitle;
     private String domain;
@@ -31,17 +23,4 @@ public class Internship {
 
     private Double stipend;
     private Long mentorId;
-    private Long progress;
-
-    @Enumerated(EnumType.STRING)
-    private InternshipStatus status;
-
-    private String remarks;
-
-
-    private Boolean isDeleted=false;
-
-
-
-
 }

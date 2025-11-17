@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +45,16 @@ public class MentorServiceImpl implements MentorServiceInterface{
         Optional<Mentor> mentor = mentorRepository.findById(id);
 
         return mentor.isPresent();
+    }
+
+    @Override
+    public List<MentorResponseDto> getAllMentors() {
+        List<Mentor> mentorList = mentorRepository.findAll();
+        if (mentorList.isEmpty()){
+            throw new RuntimeException("No Mentors found.");
+        }
+        return mentorList.stream()
+                .map(m -> mapper.map(m, MentorResponseDto.class))
+                .toList();
     }
 }

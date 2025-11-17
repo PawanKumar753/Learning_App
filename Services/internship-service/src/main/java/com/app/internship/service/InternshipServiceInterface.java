@@ -2,6 +2,7 @@ package com.app.internship.service;
 
 import com.app.internship.dto.InternshipResponseDto;
 import com.app.internship.dto.RegisterRequestDto;
+import com.app.internship.dto.UpdateInternshipDTO;
 
 import java.util.List;
 
@@ -12,6 +13,10 @@ public interface InternshipServiceInterface {
     InternshipResponseDto getInternship(Long id);
 
     List<InternshipResponseDto> getAllInternships();
+
+    String updateInternship(UpdateInternshipDTO request);
+
+    String deleteInternship(Long id);
 
 
 }

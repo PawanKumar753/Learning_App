@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/mentor")
 @RequiredArgsConstructor
@@ -31,6 +33,11 @@ public class MentorController {
     @GetMapping("/isMentorPresent/{id}")
     public ResponseEntity<Boolean> isMentorPresent(@PathVariable Long id){
         return ResponseEntity.ok(mentorService.isMentorPresent(id));
+    }
+
+    @GetMapping("/getAllMentors")
+    public ResponseEntity<List<MentorResponseDto>> getAllMentors(){
+        return ResponseEntity.ok(mentorService.getAllMentors());
     }
 
 }

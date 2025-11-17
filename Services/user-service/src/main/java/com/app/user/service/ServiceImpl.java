@@ -17,7 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 
 
 @Service
@@ -156,6 +159,13 @@ public class ServiceImpl implements ServiceInterface {
     @Override
     public String hii() {
         log.info("in service inside hii()");
+        Map<String, Object> ex = new HashMap<>();
+        List<Integer> list = new LinkedList<>();
+
+        List<Integer> list2 = new ArrayList<>();
+
+        Map<String, String> map2 = new ConcurrentHashMap<>();
+        Collections.synchronizedMap(map2);
         return "Hello";
     }
 }
